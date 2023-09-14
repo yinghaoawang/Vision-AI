@@ -19,8 +19,8 @@ model User {
   hashedPassword String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-  sessions       Session[]
-  accounts       Account[]
+  Sessions       Session[]
+  Accounts       Account[]
   createdPhotos  Photo[]
 }
 
@@ -49,7 +49,7 @@ model Session {
   userId       String   @db.ObjectId
   expires      DateTime
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -70,6 +70,6 @@ model Photo {
   genre        String
   rating       Int
   size         String
-  user         User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User         User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String? @db.ObjectId
 }
