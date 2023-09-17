@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState, useEffect, FormEvent } from 'react';
 import { signIn } from 'next-auth/react';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function Home() {
   const [email, setEmail] = useState('mail@mail.com');
   const [password, setPassword] = useState('password');
+  const { toast } = useToast();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,9 +21,15 @@ export default function Home() {
       redirect: false
     }).then((callback) => {
       if (callback?.ok) {
-        console.log('logged in');
+        toast({
+          title: 'Logged in'
+        });
       } else {
-        console.log('log in failed', callback?.error);
+        toast({
+          title: 'Log in failed',
+          description: callback?.error,
+          variant: 'destructive'
+        });
       }
     });
   };
