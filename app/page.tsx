@@ -2,14 +2,28 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState, useEffect, FormEvent } from 'react';
+import { signIn } from 'next-auth/react';
 
 export default function Home() {
   const [email, setEmail] = useState('mail@mail.com');
   const [password, setPassword] = useState('password');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    console.log(email, password);
     event.preventDefault();
+    const data = {
+      email,
+      password
+    };
+    signIn('credentials', {
+      ...data,
+      redirect: false
+    }).then((callback) => {
+      if (callback?.ok) {
+        console.log('logged in');
+      } else {
+        console.log('log in failed', callback?.error);
+      }
+    });
   };
 
   return (
