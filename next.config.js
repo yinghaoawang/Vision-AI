@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  NEXT_PUBLIC_API_URL: 'localhafsadost:3000/api'
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
