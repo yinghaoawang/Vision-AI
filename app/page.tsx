@@ -4,11 +4,13 @@ import { Input } from '@/components/ui/input';
 import { useState, FormEvent } from 'react';
 import { signIn } from 'next-auth/react';
 import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [email, setEmail] = useState('mail@mail.com');
   const [password, setPassword] = useState('password');
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -24,6 +26,7 @@ export default function Home() {
         toast({
           title: 'Logged in'
         });
+        router.refresh();
       } else {
         toast({
           title: 'Log in failed',
