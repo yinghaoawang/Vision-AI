@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { useState, FormEvent } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+
 import api from '@/app/_utils/api';
 
 export default function RegisterPage() {
@@ -13,7 +15,7 @@ export default function RegisterPage() {
   const { toast } = useToast();
   const router = useRouter();
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const data = {
       email,
@@ -29,8 +31,19 @@ export default function RegisterPage() {
         toast({
           title: 'Registration successful'
         });
-        router.push('/dashboard');
-        router.refresh();
+        signIn('credentials', {
+          ...data,
+          redirect: false
+        })
+          .then((callback) => {
+            if (callback?.ok) {
+            }
+            router.push('/dashboard');
+            router.refresh();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
         toast({
@@ -45,7 +58,7 @@ export default function RegisterPage() {
     <>
       <div className='w-80 mx-auto p-10 bg-slate-500'>
         <h1>Register</h1>
-        <form onSubmit={handleSubmit}>
+        <form className='flex flex-col gap-2 mt-2' onSubmit={handleSubmit}>
           <Input
             type='email'
             onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +74,18 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <Button variant='default'>Sign up</Button>
+          <div className='flex justify-center gap-4'>
+            <Button variant='default'>Sign up</Button>
+            <Button
+              onClick={(event: FormEvent) => {
+                event.preventDefault();
+                router.push('/login');
+              }}
+              variant='link'
+            >
+              Log in
+            </Button>
+          </div>
         </form>
       </div>
     </>
