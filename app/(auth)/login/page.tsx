@@ -26,6 +26,7 @@ export default function Home() {
         toast({
           title: 'Logged in'
         });
+        router.push('/dashboard')
         router.refresh();
       } else {
         toast({

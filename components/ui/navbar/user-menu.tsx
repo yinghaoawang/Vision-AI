@@ -18,6 +18,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
       toast({
         title: 'Logged out'
       });
+      router.push('/');
       router.refresh();
     });
   };
