@@ -17,35 +17,28 @@ export default function RegisterPage() {
     event.preventDefault();
     const data = {
       email,
-      password
+      password,
+      name
     };
 
-    api.post('/register', {
-      ...data
-    }).then(cb => {
-      console.log(cb);
-    }).catch(error => {
-      console.error(error);
-    })
-
-    // signIn('credentials', {
-    //   ...data,
-    //   redirect: false
-    // }).then((callback) => {
-    //   if (callback?.ok) {
-    //     toast({
-    //       title: 'Logged in'
-    //     });
-    //     router.push('/dashboard');
-    //     router.refresh();
-    //   } else {
-    //     toast({
-    //       title: 'Log in failed',
-    //       description: callback?.error,
-    //       variant: 'destructive'
-    //     });
-    //   }
-    // });
+    api
+      .post('/api/register', {
+        ...data
+      })
+      .then(() => {
+        toast({
+          title: 'Registration successful'
+        });
+        router.push('/dashboard');
+        router.refresh();
+      })
+      .catch((error) => {
+        toast({
+          title: 'Registration failed',
+          description: error?.response?.data?.message || error?.message,
+          variant: 'destructive'
+        });
+      });
   };
 
   return (
