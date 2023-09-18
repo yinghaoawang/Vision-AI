@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
-import { Button } from '../button';
+import { Button } from '../ui/button';
 import UserMenu from './user-menu';
+import Link from 'next/link';
 
 interface NavbarProps {
   currentUser?: User | null;
@@ -20,8 +21,10 @@ const Navbar = ({ currentUser }: NavbarProps) => {
         {currentUser && <UserMenu currentUser={currentUser} />}
         {!currentUser && (
           <>
-            <li>Log in</li>
-            <li>Sign up</li>
+            <Link href='/login'>
+              Log in
+            </Link>
+            <Link href='/register'>Sign up</Link>
           </>
         )}
       </div>

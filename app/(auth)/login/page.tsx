@@ -6,7 +6,7 @@ import { signIn } from 'next-auth/react';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 
-export default function Home() {
+export default function LoginPage() {
   const [email, setEmail] = useState('mail@mail.com');
   const [password, setPassword] = useState('password');
   const { toast } = useToast();
@@ -26,7 +26,7 @@ export default function Home() {
         toast({
           title: 'Logged in'
         });
-        router.push('/dashboard')
+        router.push('/dashboard');
         router.refresh();
       } else {
         toast({

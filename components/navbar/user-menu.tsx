@@ -1,9 +1,9 @@
 'use client';
 import { User } from '@prisma/client';
-import { Button } from '../button';
+import { Button } from '../ui/button';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useToast } from '../use-toast';
+import { useToast } from '../ui/use-toast';
 
 interface UserMenuProps {
   currentUser?: User | null;
