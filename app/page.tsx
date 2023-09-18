@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { signIn } from 'next-auth/react';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -10,7 +10,7 @@ export default function Home() {
   const [password, setPassword] = useState('password');
   const { toast } = useToast();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const data = {
       email,
