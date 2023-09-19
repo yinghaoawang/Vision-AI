@@ -72,7 +72,7 @@ export default function Sidebar({ className }: { className?: string }) {
         return (
           <Link
             className={cn(
-              'flex hover:bg-white/10 px-3 pl-6 min-h-[55px] items-center text-white',
+              'flex hover:bg-white/10 px-3 pl-6 min-h-[55px] items-center text-white text-sm',
               linkFont
             )}
             href={route.href}
