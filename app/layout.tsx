@@ -21,9 +21,11 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
-      <body className={`bg-slate-800 ${inter.className}`}>
+      <body
+        className={`flex flex-col bg-slate-800 min-h-screen ${inter.className}`}
+      >
         <Navbar currentUser={currentUser} />
-        <main>{children}</main>
+        {children}
         <Toaster />
       </body>
     </html>
