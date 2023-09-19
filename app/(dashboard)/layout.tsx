@@ -7,7 +7,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     <>
       <MobileSidebar />
       <div className='grow flex'>
-        <Sidebar />
+        <div className='hidden md:flex w-[300px]'>
+          <Sidebar />
+        </div>
         <div className='flex'>{children}</div>
       </div>
     </>

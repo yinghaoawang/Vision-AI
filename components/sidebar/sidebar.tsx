@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { Home, MessagesSquare, Image, Film, Disc3, Code } from 'lucide-react';
 import Link from 'next/link';
 
@@ -40,9 +41,14 @@ const routes = [
   }
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ className }: { className?: string }) {
   return (
-    <div className='hidden md:flex flex-col space-y-5 bg-slate-400 w-[300px] px-5 py-5'>
+    <div
+      className={cn(
+        'flex flex-col space-y-5 bg-slate-400 w-full h-full px-5 py-5',
+        className
+      )}
+    >
       {routes.map((route) => {
         return (
           <Link className='flex' href={route.href} key={route.label}>
