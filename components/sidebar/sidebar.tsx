@@ -45,13 +45,13 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex flex-col space-y-5 bg-slate-400 w-full h-full px-5 py-5',
+        'flex flex-col bg-slate-400 w-full h-full space-y-1 py-5',
         className
       )}
     >
       {routes.map((route) => {
         return (
-          <Link className='flex' href={route.href} key={route.label}>
+          <Link className='flex hover:bg-white/10 p-3 pl-6 min-h-[60px] items-center' href={route.href} key={route.label}>
             <route.icon className={`${route.color} mr-3`} /> {route.label}
           </Link>
         );

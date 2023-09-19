@@ -18,7 +18,7 @@ const MobileSidebar = () => {
       <SheetTrigger>
         <SidebarButton />
       </SheetTrigger>
-      <SheetContent side='left' className='p-0'>
+      <SheetContent side='left' className='p-0 w-[300px]'>
         <Sidebar className='pt-10' />
       </SheetContent>
     </Sheet>
