@@ -64,7 +64,7 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex flex-col bg-slate-800 w-full h-full space-y-1 py-5',
+        'flex flex-col bg-slate-950/90 w-full h-full space-y-1 py-5',
         className
       )}
     >
