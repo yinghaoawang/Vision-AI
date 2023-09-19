@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`flex flex-col bg-slate-800 min-h-screen ${inter.className}`}
+        className={`flex flex-col min-h-screen ${inter.className}`}
       >
         <Navbar currentUser={currentUser} />
         {children}

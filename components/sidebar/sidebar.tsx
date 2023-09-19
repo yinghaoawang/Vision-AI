@@ -1,5 +1,14 @@
 import { cn } from '@/lib/utils';
-import { Home, MessagesSquare, Image, Film, Disc3, Code } from 'lucide-react';
+import {
+  Home,
+  MessagesSquare,
+  Image,
+  Film,
+  Disc3,
+  Code,
+  Cog
+} from 'lucide-react';
+import { Rubik } from 'next/font/google';
 import Link from 'next/link';
 
 const routes = [
@@ -38,21 +47,38 @@ const routes = [
     icon: Code,
     href: '/code',
     color: 'text-violet-500'
+  },
+  {
+    label: 'Settings',
+    icon: Cog,
+    href: '/settings',
+    color: 'text-gray-200'
   }
 ];
+
+const linkFont = Rubik({
+  subsets: ['latin']
+});
 
 export default function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex flex-col bg-slate-400 w-full h-full space-y-1 py-5',
+        'flex flex-col bg-slate-800 w-full h-full space-y-1 py-5',
         className
       )}
     >
       {routes.map((route) => {
         return (
-          <Link className='flex hover:bg-white/10 p-3 pl-6 min-h-[60px] items-center' href={route.href} key={route.label}>
-            <route.icon className={`${route.color} mr-3`} /> {route.label}
+          <Link
+            className={cn(
+              'flex hover:bg-white/10 px-3 pl-6 min-h-[55px] items-center text-white',
+              linkFont
+            )}
+            href={route.href}
+            key={route.label}
+          >
+            <route.icon className={`${route.color} mr-4`} /> {route.label}
           </Link>
         );
       })}

@@ -26,7 +26,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
   return (
     <>
       <span>Hello {currentUser?.name}!</span>
-      <Button onClick={handleSignOut} variant='link'>
+      <Button onClick={handleSignOut} variant='link' className='text-white'>
         Sign out
       </Button>
     </>

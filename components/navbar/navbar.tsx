@@ -9,7 +9,7 @@ interface NavbarProps {
 
 const Navbar = ({ currentUser }: NavbarProps) => {
   return (
-    <div className='flex items-center justify-between px-10 bg-slate-500 h-[80px] w-full'>
+    <div className='flex items-center justify-between px-10 bg-slate-900 min-h-[60px] w-full text-white'>
       <div className='flex gap-10'>
         <Link href='/dashboard'>Home</Link>
         <Link href='/photos'>Photos</Link>
