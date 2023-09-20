@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/actions/auth";
-import openAI, { OpenAIError } from "@/lib/openai";
+import openAI from "@/lib/openai";
 import { NextRequest, NextResponse } from "next/server";
 import { APIError } from "openai";
 
