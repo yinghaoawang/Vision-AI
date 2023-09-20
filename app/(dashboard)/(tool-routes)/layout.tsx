@@ -2,7 +2,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 
-export const messagesHeight =
+const messagesHeight =
   'h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]';
 
 export default function ToolRoutesLayout({

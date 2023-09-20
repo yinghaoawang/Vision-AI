@@ -23,6 +23,8 @@ const descriptions = [
   'Elevate your creativity with AI – effortlessly generate photos, videos, and code with the ultimate toolkit at your disposal.'
 ];
 
+const dashboardHeight = 'h-[calc(100vh-var(--navbar-height))]';
+
 export default function DashboardPage() {
   const router = useRouter();
   const [selectedOpener, setSelectedOpener] = useState('');
@@ -35,32 +37,34 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className='w-full max-w-[700px] mx-auto px-3 grow pt-6 pb-8 space-y-4 text-white'>
-      <h2 className='text-4xl text-center font-bold'>{selectedOpener}</h2>
-      <div className='text-slate-400 text-center pb-6'>
-        {selectedDescription}
-      </div>
-      {tools.map((tool) => {
-        if (tool.label === 'Dashboard' || tool.label === 'Settings') {
-          return;
-        }
+    <div className={cn('w-full overflow-y-auto', dashboardHeight)}>
+      <div className='max-w-[700px] mx-auto px-3 grow pt-6 pb-8 space-y-4 text-white'>
+        <h2 className='text-4xl text-center font-bold'>{selectedOpener}</h2>
+        <div className='text-slate-400 text-center pb-6'>
+          {selectedDescription}
+        </div>
+        {tools.map((tool) => {
+          if (tool.label === 'Dashboard' || tool.label === 'Settings') {
+            return;
+          }
 
-        return (
-          <Card
-            className='flex border-black/[.15] bg-slate-800 hover:bg-slate-800/80 text-white px-7 py-5 items-center justify-between cursor-pointer'
-            key={tool.label}
-            onClick={() => router.push(tool.href)}
-          >
-            <div>
-              <div className='flex'>
-                <tool.icon className={cn('mr-4', tool.color)} />
-                {tool.label}
+          return (
+            <Card
+              className='flex border-black/[.15] bg-slate-800 hover:bg-slate-800/80 text-white px-7 py-5 items-center justify-between cursor-pointer'
+              key={tool.label}
+              onClick={() => router.push(tool.href)}
+            >
+              <div>
+                <div className='flex'>
+                  <tool.icon className={cn('mr-4', tool.color)} />
+                  {tool.label}
+                </div>
               </div>
-            </div>
-            <ArrowRight size={22} />
-          </Card>
-        );
-      })}
+              <ArrowRight size={22} />
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }
