@@ -12,7 +12,7 @@ export default function ToolRoutesLayout({
 }) {
   return (
     <div className='flex flex-col h-inherit w-full text-gray-200'>
-      <div className={cn('overflow-y-scroll', messagesHeight)}>{children}</div>
+      <div className={cn('overflow-auto', messagesHeight)}>{children}</div>
       <div className='flex justify-center px-5 py-3 h-[var(--message-box-height)] '>
         <Textarea
           className='bg-slate-800 text-gray-200 w-full max-w-[800px]'
