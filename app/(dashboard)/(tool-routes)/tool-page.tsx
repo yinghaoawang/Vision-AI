@@ -9,7 +9,9 @@ import {
   FormEventHandler,
   KeyboardEvent,
   SetStateAction,
-  useRef
+  useEffect,
+  useRef,
+  useState
 } from 'react';
 
 const messagesHeight =
@@ -23,7 +25,7 @@ type Message = {
 
 const MessageContent = ({ messages }: { messages?: Message[] }) => {
   return (
-    <div className='w-full'>
+    <div className='w-full '>
       {messages?.map((message) => {
         const bgColor = message.isUserMessage && 'bg-slate-800';
         return (
@@ -73,7 +75,7 @@ export default function ToolPage({
 
   return (
     <div className='flex flex-col h-inherit w-full text-gray-200'>
-      <div className={cn('overflow-auto', messagesHeight)}>
+      <div className={cn('overflow-auto flex flex-col-reverse', messagesHeight)}>
         <MessageContent messages={messages} />
       </div>
       <form
