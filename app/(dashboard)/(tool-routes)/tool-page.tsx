@@ -18,7 +18,7 @@ const messagesHeight =
 
 type Message = {
   id: number;
-  isUserMessage: boolean;
+  role: 'user' | 'assistant' | 'system';
   content: string;
 };
 
@@ -26,7 +26,7 @@ const MessageContent = ({ messages }: { messages?: Message[] }) => {
   return (
     <div className='w-full'>
       {messages?.map((message) => {
-        const bgColor = message.isUserMessage && 'bg-slate-800';
+        const bgColor = message.role === 'user' ? 'bg-slate-800' : 'bg-inherit';
         return (
           <div
             className={cn(

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import prisma from '@/lib/prismadb';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { ZodError, z } from 'zod';
 import { Prisma } from '@prisma/client';
 
@@ -10,7 +10,7 @@ const UserData = z.object({
   password: z.string().min(6).max(36)
 });
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { email, name, password } = body;
@@ -29,9 +29,9 @@ export async function POST(request: Request) {
         hashedPassword
       }
     });
-
     return NextResponse.json(user);
   } catch (error: any) {
+    console.error(error);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return NextResponse.json(
         {
@@ -40,7 +40,6 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     } else if (error instanceof ZodError) {
-      console.error('zod', error);
       const errorDetail = error.errors.at(0);
       return NextResponse.json(
         {
@@ -49,7 +48,9 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-    console.error('other', error);
-    return NextResponse.json({ message: error?.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

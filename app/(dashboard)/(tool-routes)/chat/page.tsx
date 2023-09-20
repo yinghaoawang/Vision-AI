@@ -1,61 +1,63 @@
 'use client';
 import { FormEvent, useState } from 'react';
 import ToolPage from '../tool-page';
+import api from '@/app/_utils/api';
+import { AxiosError } from 'axios';
 
 const messages = [
   {
     id: 1,
-    isUserMessage: true,
+    role: 'user' as const,
     content: 'Hey how do I do something?'
   },
   {
     id: 2,
-    isUserMessage: true,
+    role: 'user' as const,
     content: 'Potential bug'
   },
   {
     id: 3,
-    isUserMessage: false,
+    role: 'assistant' as const,
     content: 'this is how you do it'
   },
   {
     id: 4,
-    isUserMessage: true,
+    role: 'user' as const,
     content: 'Potential bug'
   },
   {
     id: 5,
-    isUserMessage: false,
+    role: 'assistant' as const,
     content: 'this is how you do it'
   },
   {
     id: 6,
-    isUserMessage: true,
+    role: 'user' as const,
     content: 'Potential bug'
   },
   {
     id: 7,
-    isUserMessage: false,
+    role: 'assistant' as const,
     content: 'this is how you do it'
   },
   {
     id: 8,
-    isUserMessage: true,
+    role: 'user' as const,
     content: 'Potential bug'
   },
   {
     id: 9,
-    isUserMessage: false,
+    role: 'assistant' as const,
     content: 'this is how you do it'
   },
   {
     id: 10,
-    isUserMessage: true,
+    role: 'user' as const,
     content: 'Potential bug'
   },
   {
     id: 11,
-    isUserMessage: false,
+    role: 'assistant' as const,
     content: 'this is how you do it'
   }
 ];
@@ -63,18 +65,28 @@ const messages = [
 export default function ChatPage() {
   const [inputMessage, setInputMessage] = useState('');
   const [currMessages, setCurrMessages] = useState(messages);
-  const [lastId, setLastId] = useState(messages[messages.length - 1].id + 1 || 0);
+  const [lastId, setLastId] = useState(
+    messages[messages.length - 1].id + 1 || 0
+  );
 
   const submitHandler = (event: FormEvent) => {
     console.log(inputMessage);
     const wrappedMessage = {
       id: lastId,
-      isUserMessage: true,
+      role: 'user' as const,
       content: inputMessage
     };
     setLastId(lastId + 1);
     setCurrMessages([...currMessages, wrappedMessage]);
     setInputMessage('');
+    api
+      .post('/api/chat')
+      .then((response) => {
+        console.log('res', response);
+      })
+      .catch((error) => {
+        console.error('err', error?.response?.data);
+      });
   };
   return (
     <ToolPage
