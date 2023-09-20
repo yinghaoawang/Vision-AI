@@ -98,8 +98,8 @@ export default function ToolPage({
           />
           <Button
             className={cn(
-              'h-[40px] w-[40px] p-0 absolute bottom-4 right-4 bg-transparent transition-colors duration-500',
-              inputMessage.length > 0 && 'bg-green-600'
+              'h-[40px] w-[40px] p-0 absolute bottom-4 right-4 bg-transparent transition-colors duration-500 hover:bg-inherit',
+              inputMessage.length > 0 && 'bg-green-600 hover:bg-green-700'
             )}
             onClick={(event) => {
               event.preventDefault();
