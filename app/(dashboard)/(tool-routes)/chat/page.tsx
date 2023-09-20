@@ -36,39 +36,42 @@ const messages = [
     isUserMessage: false,
     content: 'this is how you do it'
   },
-  // {
-  //   id: 8,
-  //   isUserMessage: true,
-  //   content: 'Potential bug'
-  // },
-  // {
-  //   id: 9,
-  //   isUserMessage: false,
-  //   content: 'this is how you do it'
-  // },{
-  //   id: 10,
-  //   isUserMessage: true,
-  //   content: 'Potential bug'
-  // },
-  // {
-  //   id: 11,
-  //   isUserMessage: false,
-  //   content: 'this is how you do it'
-  // }
+  {
+    id: 8,
+    isUserMessage: true,
+    content: 'Potential bug'
+  },
+  {
+    id: 9,
+    isUserMessage: false,
+    content: 'this is how you do it'
+  },{
+    id: 10,
+    isUserMessage: true,
+    content: 'Potential bug'
+  },
+  {
+    id: 11,
+    isUserMessage: false,
+    content: 'this is how you do it'
+  }
 ];
 
 export default function ChatPage() {
   return (
-    <div className='w-full overflow-y-scroll'>
+    <div className='w-full'>
       {messages.map((message) => {
         const bgColor = message.isUserMessage && 'bg-slate-800';
         return (
           <div
-            className={cn('flex w-full justify-center pt-6 pb-8 space-y-4', bgColor)}
+            className={cn(
+              'flex w-full justify-center pt-6 pb-8 space-y-4',
+              bgColor
+            )}
             key={message.id}
           >
             <div className='w-full max-w-[800px] px-7 flex justify-center'>
-              <h2 className='w-full'>Chat with AI</h2>
+              <h2 className='w-full'>{message.content}</h2>
             </div>
           </div>
         );

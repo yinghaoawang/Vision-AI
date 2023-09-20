@@ -11,7 +11,7 @@ interface NavbarProps {
 const Navbar = ({ currentUser }: NavbarProps) => {
   return (
     <div className='bg-slate-950 flex flex-col'>
-      <div className='hidden md:flex items-center justify-between px-10 min-h-[60px] w-full text-white'>
+      <div className='hidden md:flex items-center justify-between px-10 h-[var(--navbar-height)] w-full text-white'>
         <div className='flex gap-10'>
           <Link href='/dashboard'>Home</Link>
         </div>

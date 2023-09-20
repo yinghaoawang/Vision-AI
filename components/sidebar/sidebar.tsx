@@ -56,6 +56,8 @@ export const tools = [
   }
 ];
 
+const sidebarHeight = 'h-[calc(100vh-var(--navbar-height))]';
+
 const linkFont = Rubik({
   subsets: ['latin']
 });
@@ -64,7 +66,8 @@ export default function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex flex-col bg-slate-950/90 w-full h-full space-y-1 py-5',
+        'flex flex-col bg-slate-950/90 w-full h-full space-y-1 py-5 overflow-auto',
+        sidebarHeight,
         className
       )}
     >
