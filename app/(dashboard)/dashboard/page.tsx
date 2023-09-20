@@ -35,7 +35,7 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className='w-full max-w-[700px] mx-auto px-3 grow pt-6 pb-8 space-y-2'>
+    <div className='w-full max-w-[700px] mx-auto px-3 grow pt-6 pb-8 space-y-4'>
       <h2 className='text-4xl text-center font-bold'>{selectedOpener}</h2>
       <div className='text-muted-foreground text-center pb-6'>
         {selectedDescription}
@@ -47,7 +47,7 @@ export default function DashboardPage() {
 
         return (
           <Card
-            className='flex border-black/[.15] px-7 py-5 items-center justify-between cursor-pointer'
+            className='flex border-black/[.15] px-7 py-5 items-center justify-between cursor-pointer hover:shadow-lg'
             key={tool.label}
             onClick={() => router.push(tool.href)}
           >
