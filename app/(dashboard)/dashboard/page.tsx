@@ -41,9 +41,10 @@ export default function DashboardPage() {
         {selectedDescription}
       </div>
       {tools.map((tool) => {
-        if (tool.label === 'Settings') {
-          tool.color = 'text-gray-600';
+        if (tool.label === 'Dashboard' || tool.label === 'Settings') {
+          return;
         }
+
         return (
           <Card
             className='flex border-black/[.15] px-7 py-5 items-center justify-between cursor-pointer'
