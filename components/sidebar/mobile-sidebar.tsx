@@ -4,9 +4,9 @@ import Sidebar from './sidebar';
 
 const SidebarButton = () => {
   return (
-    <div className='flex md:hidden bg-inherit'>
-      <div className='flex w-full border-t-[1px] border-slate-700 mx-5 min-h-[60px] items-center pl-4'>
-        <Menu color='white' />
+    <div className='flex md:hidden bg-inherit text-white'>
+      <div className='flex w-full mx-5 min-h-[60px] items-center px-4 text-center justify-between'>
+        <Menu />
       </div>
     </div>
   );
