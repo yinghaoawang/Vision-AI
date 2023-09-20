@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import {
   Home,
@@ -10,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Rubik } from 'next/font/google';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export const tools = [
   {
@@ -63,6 +66,7 @@ const linkFont = Rubik({
 });
 
 export default function Sidebar({ className }: { className?: string }) {
+  const pathname = usePathname();
   return (
     <div
       className={cn(
@@ -72,11 +76,13 @@ export default function Sidebar({ className }: { className?: string }) {
       )}
     >
       {tools.map((route) => {
+        const isSelected = route.href === pathname;
         return (
           <Link
             className={cn(
               'flex hover:bg-white/10 px-3 pl-6 min-h-[55px] items-center text-white text-sm',
-              linkFont
+              linkFont,
+              isSelected && 'bg-white/10'
             )}
             href={route.href}
             key={route.label}
