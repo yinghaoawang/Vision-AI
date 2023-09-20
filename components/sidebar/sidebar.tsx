@@ -11,7 +11,7 @@ import {
 import { Rubik } from 'next/font/google';
 import Link from 'next/link';
 
-const routes = [
+export const tools = [
   {
     label: 'Dashboard',
     icon: Home,
@@ -19,7 +19,7 @@ const routes = [
     color: 'text-blue-500'
   },
   {
-    label: 'Chat With Me',
+    label: 'Chat With AI',
     icon: MessagesSquare,
     href: '/chat',
     color: 'text-red-500'
@@ -68,7 +68,7 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
-      {routes.map((route) => {
+      {tools.map((route) => {
         return (
           <Link
             className={cn(
@@ -78,7 +78,7 @@ export default function Sidebar({ className }: { className?: string }) {
             href={route.href}
             key={route.label}
           >
-            <route.icon className={`${route.color} mr-4`} /> {route.label}
+            <route.icon className={cn('mr-4', route.color)} /> {route.label}
           </Link>
         );
       })}
