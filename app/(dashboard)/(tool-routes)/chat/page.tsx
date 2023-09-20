@@ -1,4 +1,6 @@
-import { cn } from '@/lib/utils';
+'use client';
+import { FormEvent, useState } from 'react';
+import ToolPage from '../tool-page';
 
 const messages = [
   {
@@ -45,7 +47,8 @@ const messages = [
     id: 9,
     isUserMessage: false,
     content: 'this is how you do it'
-  },{
+  },
+  {
     id: 10,
     isUserMessage: true,
     content: 'Potential bug'
@@ -58,24 +61,27 @@ const messages = [
 ];
 
 export default function ChatPage() {
+  const [inputMessage, setInputMessage] = useState('');
+  const [currMessages, setCurrMessages] = useState(messages);
+  const [lastId, setLastId] = useState(messages[messages.length - 1].id + 1 || 0);
+
+  const submitHandler = (event: FormEvent) => {
+    console.log(inputMessage);
+    const wrappedMessage = {
+      id: lastId,
+      isUserMessage: true,
+      content: inputMessage
+    };
+    setLastId(lastId + 1);
+    setCurrMessages([...currMessages, wrappedMessage]);
+    setInputMessage('');
+  };
   return (
-    <div className='w-full'>
-      {messages.map((message) => {
-        const bgColor = message.isUserMessage && 'bg-slate-800';
-        return (
-          <div
-            className={cn(
-              'flex w-full justify-center pt-6 pb-8 space-y-4',
-              bgColor
-            )}
-            key={message.id}
-          >
-            <div className='w-full max-w-[800px] px-7 flex justify-center'>
-              <h2 className='w-full'>{message.content}</h2>
-            </div>
-          </div>
-        );
-      })}
-    </div>
+    <ToolPage
+      inputMessage={inputMessage}
+      setInputMessage={setInputMessage}
+      messages={currMessages}
+      submitHandler={submitHandler}
+    />
   );
 }
