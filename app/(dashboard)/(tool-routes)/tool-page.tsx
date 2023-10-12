@@ -12,28 +12,27 @@ import {
   useRef,
 } from "react";
 import { SendHorizonal } from "lucide-react";
+import { ChatCompletionMessage } from "openai/resources/chat/index.mjs";
 
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
 
-type Message = {
-  id: number;
-  role: "user" | "assistant" | "system";
-  content: string;
-};
-
-const MessageContent = ({ messages }: { messages?: Message[] }) => {
+const MessageContent = ({
+  messages,
+}: {
+  messages?: ChatCompletionMessage[];
+}) => {
   return (
     <div className="w-full">
-      {messages?.map((message) => {
+      {messages?.map((message, index) => {
         const bgColor = message.role === "user" ? "bg-slate-800" : "bg-inherit";
         return (
           <div
+            key={"message" + index}
             className={cn(
               "flex w-full justify-center space-y-4 pb-8 pt-6",
               bgColor,
             )}
-            key={message.id}
           >
             <div className="flex w-full max-w-[800px] justify-center px-7">
               <h2 className="w-full">{message.content}</h2>
@@ -51,7 +50,7 @@ export default function ToolPage({
   messages,
   submitHandler,
 }: {
-  messages?: Message[];
+  messages?: ChatCompletionMessage[];
   submitHandler: FormEventHandler;
   inputMessage: string;
   setInputMessage: Dispatch<SetStateAction<string>>;
