@@ -1,26 +1,22 @@
-import { User } from '@prisma/client';
-import { Button } from '../ui/button';
-import UserMenu from './user-menu';
-import Link from 'next/link';
-import MobileSidebar from '../sidebar/mobile-sidebar';
+import UserMenu from "./user-menu";
+import Link from "next/link";
+import MobileSidebar from "../sidebar/mobile-sidebar";
+import { getCurrentUser } from "@/actions/auth";
 
-interface NavbarProps {
-  currentUser?: User | null;
-}
-
-const Navbar = ({ currentUser }: NavbarProps) => {
+const Navbar = async () => {
+  const currentUser = await getCurrentUser();
   return (
-    <div className='bg-slate-950 flex flex-col'>
-      <div className='hidden md:flex items-center justify-between px-10 h-[var(--navbar-height)] w-full text-white'>
-        <div className='flex gap-10'>
-          <Link href='/dashboard'>Home</Link>
+    <div className="flex flex-col bg-slate-950">
+      <div className="hidden h-[var(--navbar-height)] w-full items-center justify-between px-10 text-white md:flex">
+        <div className="flex gap-10">
+          <Link href="/dashboard">Home</Link>
         </div>
-        <div className='flex items-center gap-10'>
+        <div className="flex items-center gap-10">
           {currentUser && <UserMenu currentUser={currentUser} />}
           {!currentUser && (
             <>
-              <Link href='/login'>Log in</Link>
-              <Link href='/register'>Sign up</Link>
+              <Link href="/login">Log in</Link>
+              <Link href="/register">Sign up</Link>
             </>
           )}
         </div>

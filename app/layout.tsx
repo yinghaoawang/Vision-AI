@@ -2,8 +2,6 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Navbar from '@/components/navbar/navbar';
-import { getCurrentUser } from '../actions/auth';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,14 +15,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getCurrentUser();
-
   return (
     <html lang='en'>
       <body
         className={`flex flex-col min-h-screen ${inter.className}`}
       >
-        <Navbar currentUser={currentUser} />
         {children}
         <Toaster />
       </body>
