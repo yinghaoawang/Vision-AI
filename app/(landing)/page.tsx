@@ -1,16 +1,19 @@
 "use client";
 import { NavbarLogo } from "@/components/navbar/navbar-logo";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Typewriter from "typewriter-effect";
 
 export default function LandingPage() {
+  const session = useSession();
+  const currentUser = session?.data?.user;
   return (
     <div className="flex min-h-screen justify-center bg-slate-900 ">
       <div className="flex w-full max-w-[1200px] grow flex-col text-white">
         <div className="flex items-center justify-between px-5">
           <NavbarLogo />
-          <Link href="/login">
+          <Link href={currentUser ? "dashboard" : "/login"}>
             <Button
               className="w-[120px] rounded-full font-semibold"
               variant={"white"}
@@ -36,7 +39,7 @@ export default function LandingPage() {
               }}
             />
           </div>
-          <Link href="/login">
+          <Link href={currentUser ? "/dashboard" : "/login"}>
             <Button variant="gradient">Start Generating For Free</Button>
           </Link>
         </div>
