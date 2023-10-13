@@ -1,21 +1,15 @@
 "use client";
+import { NavbarLogo } from "@/components/navbar/navbar-logo";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import Typewriter from "typewriter-effect";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-900 ">
-      <div className="flex w-full grow flex-col text-white">
+    <div className="flex min-h-screen justify-center bg-slate-900 ">
+      <div className="flex w-full max-w-[1000px] grow flex-col text-white">
         <div className="flex items-center justify-between px-5">
-          <Link
-            href="/login"
-            className="mb-3 flex w-full items-center gap-3 py-3 font-semibold"
-          >
-            <Image width={40} height={40} src="/logo.svg" alt="Logo" />
-            <span>Vision AI</span>
-          </Link>
+          <NavbarLogo />
           <Link href="/login">
             <Button
               className="w-[120px] rounded-full font-semibold"
@@ -43,7 +37,7 @@ export default function LandingPage() {
             />
           </div>
           <Link href="/login">
-            <Button variant='gradient'>Start Generating For Free</Button>
+            <Button variant="gradient">Start Generating For Free</Button>
           </Link>
         </div>
       </div>

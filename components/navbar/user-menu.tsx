@@ -1,24 +1,21 @@
-'use client';
-import { User } from '@prisma/client';
-import { Button } from '../ui/button';
-import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useToast } from '../ui/use-toast';
+"use client";
+import { Button } from "../ui/button";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
-interface UserMenuProps {
-  currentUser?: User | null;
-}
-
-const UserMenu = ({ currentUser }: UserMenuProps) => {
+const UserMenu = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const session = useSession();
+  const currentUser = session?.data?.user;
 
   const handleSignOut = () => {
     signOut({ redirect: false }).then(() => {
       toast({
-        title: 'Logged out'
+        title: "Logged out",
       });
-      router.push('/');
+      router.push("/");
       router.refresh();
     });
   };
@@ -26,7 +23,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
   return (
     <>
       <span>Hello {currentUser?.name}!</span>
-      <Button onClick={handleSignOut} variant='link' className='text-white'>
+      <Button onClick={handleSignOut} variant="link" className="text-white">
         Sign out
       </Button>
     </>
