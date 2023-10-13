@@ -23,28 +23,28 @@ const MessageContent = ({
   messages?: ChatCompletionMessage[];
 }) => {
   return (
-    <div className="w-full">
+    <div className="mb-2 w-full">
       {messages?.map((message, index) => {
         const bgColor = message.role === "user" ? "bg-slate-800" : "bg-inherit";
         return (
           <div
             key={"message" + index}
-            className={cn(
-              "flex w-full justify-center space-y-4 pb-8 pt-6",
-              bgColor,
-            )}
+            className={cn("flex w-full justify-center space-y-4 py-2", bgColor)}
           >
             <div className="flex w-full max-w-[800px] justify-center px-7">
               <div className="w-full">
                 <ReactMarkdown
                   components={{
+                    p: ({ node, ...props }) => (
+                      <p className="my-4 leading-8" {...props} />
+                    ),
                     pre: ({ node, ...props }) => (
-                      <div className="my-2 w-full overflow-auto rounded-lg bg-black/10  p-4">
+                      <div className="my-2 w-full overflow-auto rounded-lg bg-black/10 px-4 py-2">
                         <pre {...props} />
                       </div>
                     ),
                     code: ({ node, ...props }) => (
-                      <code className="rounded-lg bg-black/10 p-4" {...props} />
+                      <code className="rounded-lg bg-black/10 p-2" {...props} />
                     ),
                   }}
                 >
