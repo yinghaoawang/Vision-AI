@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { getCurrentUser } from "@/actions/auth";
 import openAI from "@/lib/openai";
 import { NextRequest, NextResponse } from "next/server";
