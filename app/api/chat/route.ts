@@ -10,11 +10,13 @@ export async function POST(request: NextRequest) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const body = await request.json();
+    const { messages } = body;
+
     const aiMessage = await openAI.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [],
+      messages,
     });
-    console.log("Session", JSON.stringify(currentUser, null, 2));
 
     return NextResponse.json(JSON.stringify(aiMessage));
   } catch (error) {

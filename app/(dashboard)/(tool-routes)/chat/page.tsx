@@ -5,50 +5,50 @@ import api from "@/app/_utils/api";
 import { ChatCompletionMessage } from "openai/resources/chat/index.mjs";
 
 const messages: ChatCompletionMessage[] = [
-  {
-    role: "user" as const,
-    content: "Hey how do I do something?",
-  },
-  {
-    role: "user" as const,
-    content: "Potential bug",
-  },
-  {
-    role: "assistant" as const,
-    content: "this is how you do it",
-  },
-  {
-    role: "user" as const,
-    content: "Potential bug",
-  },
-  {
-    role: "assistant" as const,
-    content: "this is how you do it",
-  },
-  {
-    role: "user" as const,
-    content: "Potential bug",
-  },
-  {
-    role: "assistant" as const,
-    content: "this is how you do it",
-  },
-  {
-    role: "user" as const,
-    content: "Potential bug",
-  },
-  {
-    role: "assistant" as const,
-    content: "this is how you do it",
-  },
-  {
-    role: "user" as const,
-    content: "Potential bug",
-  },
-  {
-    role: "assistant" as const,
-    content: "this is how you do it",
-  },
+  // {
+  //   role: "user" as const,
+  //   content: "Hey how do I do something?",
+  // },
+  // {
+  //   role: "user" as const,
+  //   content: "Potential bug",
+  // },
+  // {
+  //   role: "assistant" as const,
+  //   content: "this is how you do it",
+  // },
+  // {
+  //   role: "user" as const,
+  //   content: "Potential bug",
+  // },
+  // {
+  //   role: "assistant" as const,
+  //   content: "this is how you do it",
+  // },
+  // {
+  //   role: "user" as const,
+  //   content: "Potential bug",
+  // },
+  // {
+  //   role: "assistant" as const,
+  //   content: "this is how you do it",
+  // },
+  // {
+  //   role: "user" as const,
+  //   content: "Potential bug",
+  // },
+  // {
+  //   role: "assistant" as const,
+  //   content: "this is how you do it",
+  // },
+  // {
+  //   role: "user" as const,
+  //   content: "Potential bug",
+  // },
+  // {
+  //   role: "assistant" as const,
+  //   content: "this is how you do it",
+  // },
 ];
 
 export default function ChatPage() {
@@ -58,16 +58,26 @@ export default function ChatPage() {
 
   const submitHandler = (event: FormEvent) => {
     console.log(inputMessage);
-    const wrappedMessage = {
+    const wrappedMessage: ChatCompletionMessage = {
       role: "user" as const,
       content: inputMessage,
     };
-    setCurrMessages([...currMessages, wrappedMessage]);
+    const newMessages = [...currMessages, wrappedMessage];
+    setCurrMessages(newMessages);
     setInputMessage("");
     api
-      .post("/api/chat")
+      .post("/api/chat", {
+        messages: newMessages,
+      })
       .then((response) => {
-        console.log("res", response);
+        const content = JSON.parse(response?.data);
+        const message = content?.choices?.[0]?.message as
+          | ChatCompletionMessage
+          | undefined;
+        if (message == null)
+          throw new Error("Could not get a response back from ChatGPT");
+
+        setCurrMessages((prevMessages) => [...prevMessages, message]);
       })
       .catch((error) => {
         console.error("err", error?.response?.data);
