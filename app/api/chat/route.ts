@@ -1,4 +1,5 @@
-export const runtime = "edge";
+export const runtime = "edge"; // 'nodejs' is the default
+export const preferredRegion = "pdx1"; // only execute this function on iad1
 
 import { getCurrentUser } from "@/actions/auth";
 import openAI from "@/lib/openai";

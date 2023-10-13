@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -13,6 +12,7 @@ import {
 } from "react";
 import { SendHorizonal } from "lucide-react";
 import { ChatCompletionMessage } from "openai/resources/chat/index.mjs";
+import ReactMarkdown from "react-markdown";
 
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
@@ -35,7 +35,22 @@ const MessageContent = ({
             )}
           >
             <div className="flex w-full max-w-[800px] justify-center px-7">
-              <h2 className="w-full">{message.content}</h2>
+              <div className="w-full">
+                <ReactMarkdown
+                  components={{
+                    pre: ({ node, ...props }) => (
+                      <div className="my-2 w-full overflow-auto rounded-lg bg-black/10  p-4">
+                        <pre {...props} />
+                      </div>
+                    ),
+                    code: ({ node, ...props }) => (
+                      <code className="rounded-lg bg-black/10 p-4" {...props} />
+                    ),
+                  }}
+                >
+                  {message.content}
+                </ReactMarkdown>
+              </div>
             </div>
           </div>
         );
