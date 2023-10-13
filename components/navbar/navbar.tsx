@@ -3,7 +3,7 @@ import UserMenu from "./user-menu";
 import MobileSidebar from "../sidebar/mobile-sidebar";
 import { NavbarLogo } from "./navbar-logo";
 import { useUser } from "@clerk/nextjs";
-import { SignUpButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 const Navbar = () => {
   const { user: currentUser } = useUser();
@@ -15,7 +15,9 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-10">
           {currentUser && <UserMenu />}
-          {!currentUser && <SignUpButton>Log in</SignUpButton>}
+          {!currentUser && (
+            <Link href={currentUser ? "/dashboard" : "/login"}>Log in</Link>
+          )}
         </div>
       </div>
       <MobileSidebar />
