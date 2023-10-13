@@ -10,7 +10,12 @@ export default function LandingPage() {
   const router = useRouter();
   const { user: currentUser, isLoaded } = useUser();
 
-  if (!isLoaded) return <div>Loading</div>;
+  if (!isLoaded)
+    return (
+      <div className="flex h-10 min-h-screen w-full items-center justify-center bg-slate-900">
+        <span className="loader h-10 w-10"></span>
+      </div>
+    );
 
   if (currentUser != null) {
     router.push("/dashboard");
