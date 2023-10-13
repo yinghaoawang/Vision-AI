@@ -1,10 +1,9 @@
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
 export const NavbarLogo = () => {
-  const session = useSession();
-  const currentUser = session?.data?.user;
+  const { user: currentUser } = useUser();
   return (
     <Link
       href={currentUser ? "/dashboard" : "/login"}

@@ -1,13 +1,12 @@
 "use client";
 import UserMenu from "./user-menu";
-import Link from "next/link";
 import MobileSidebar from "../sidebar/mobile-sidebar";
 import { NavbarLogo } from "./navbar-logo";
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
+import { SignUpButton } from "@clerk/nextjs";
 
 const Navbar = () => {
-  const session = useSession();
-  const currentUser = session?.data?.user;
+  const { user: currentUser } = useUser();
   return (
     <div className="flex flex-col bg-slate-950">
       <div className="hidden h-[var(--navbar-height)] w-full items-center justify-between px-10 text-white md:flex">
@@ -16,12 +15,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-10">
           {currentUser && <UserMenu />}
-          {!currentUser && (
-            <>
-              <Link href="/login">Log in</Link>
-              <Link href="/register">Sign up</Link>
-            </>
-          )}
+          {!currentUser && <SignUpButton>Log in</SignUpButton>}
         </div>
       </div>
       <MobileSidebar />
