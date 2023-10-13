@@ -7,7 +7,7 @@ import Typewriter from "typewriter-effect";
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen justify-center bg-slate-900 ">
-      <div className="flex w-full max-w-[1000px] grow flex-col text-white">
+      <div className="flex w-full max-w-[1200px] grow flex-col text-white">
         <div className="flex items-center justify-between px-5">
           <NavbarLogo />
           <Link href="/login">
