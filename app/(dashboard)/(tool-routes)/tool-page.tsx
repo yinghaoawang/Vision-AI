@@ -3,25 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import {
-  ChangeEvent,
-  Dispatch,
+  ChangeEventHandler,
   FormEventHandler,
   KeyboardEvent,
-  SetStateAction,
   useRef,
 } from "react";
 import { SendHorizonal } from "lucide-react";
-import { ChatCompletionMessage } from "openai/resources/chat/index.mjs";
 import ReactMarkdown from "react-markdown";
+import { Message } from "ai";
 
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
 
-const MessageContent = ({
-  messages,
-}: {
-  messages?: ChatCompletionMessage[];
-}) => {
+const MessageContent = ({ messages }: { messages?: Message[] }) => {
   return (
     <div className="mb-2 w-full">
       {messages?.map((message, index) => {
@@ -32,19 +26,22 @@ const MessageContent = ({
             className={cn("flex w-full justify-center space-y-4 py-2", bgColor)}
           >
             <div className="flex w-full max-w-[800px] justify-center px-7">
-              <div className="w-full">
+              <div className="w-full leading-7">
                 <ReactMarkdown
                   components={{
                     p: ({ node, ...props }) => (
-                      <p className="my-4 leading-8" {...props} />
+                      <p className="my-4" {...props} />
                     ),
                     pre: ({ node, ...props }) => (
-                      <div className="my-2 w-full overflow-auto rounded-lg bg-black/10 px-4 py-2">
+                      <div className="my-2 w-full overflow-auto rounded-lg bg-black/30 px-4 py-3 leading-6">
                         <pre {...props} />
                       </div>
                     ),
                     code: ({ node, ...props }) => (
-                      <code className="rounded-lg bg-black/10 p-2" {...props} />
+                      <code
+                        className="rounded-lg bg-black/30 p-2 leading-6"
+                        {...props}
+                      />
                     ),
                   }}
                 >
@@ -61,14 +58,14 @@ const MessageContent = ({
 
 export default function ToolPage({
   inputMessage,
-  setInputMessage,
+  onChange,
   messages,
-  submitHandler,
+  onSubmit,
 }: {
-  messages?: ChatCompletionMessage[];
-  submitHandler: FormEventHandler;
+  messages?: Message[];
+  onSubmit: FormEventHandler;
   inputMessage: string;
-  setInputMessage: Dispatch<SetStateAction<string>>;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -85,11 +82,6 @@ export default function ToolPage({
     }
   };
 
-  const textAreaChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    event.preventDefault();
-    setInputMessage(event.target.value);
-  };
-
   return (
     <div className="h-inherit flex w-full flex-col text-gray-200">
       <div
@@ -99,7 +91,7 @@ export default function ToolPage({
       </div>
       <form
         className="flex h-[var(--message-box-height)] justify-center px-5 py-3"
-        onSubmit={submitHandler}
+        onSubmit={onSubmit}
         ref={formRef}
       >
         <div className="relative w-full max-w-[800px]">
@@ -107,7 +99,7 @@ export default function ToolPage({
             value={inputMessage}
             className="bg-slate-800 pr-[50px] text-gray-200 outline-none"
             placeholder="Ask me anything"
-            onChange={textAreaChangeHandler}
+            onChange={onChange}
             onKeyDown={textAreaKeyPressHandler}
           />
           <Button
