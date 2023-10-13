@@ -1,10 +1,10 @@
-export const runtime = "edge"; // 'nodejs' is the default
-export const preferredRegion = "pdx1"; // only execute this function on iad1
-
 import { getCurrentUser } from "@/actions/auth";
 import openAI from "@/lib/openai";
 import { NextRequest, NextResponse } from "next/server";
 import { APIError } from "openai";
+
+export const runtime =
+  process.env.NODE_ENV === "production" ? "edge" : "nodejs";
 
 export async function POST(request: NextRequest) {
   try {
