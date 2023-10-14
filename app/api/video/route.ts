@@ -28,6 +28,7 @@ const createStreamForPrompt = ({ prompt }: { prompt: string }) => {
         );
         controller.close();
       } catch (error) {
+        console.error(error);
         controller.enqueue(encoder.encode(JSON.stringify({ error })));
         controller.close();
       }
