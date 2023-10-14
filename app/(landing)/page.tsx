@@ -19,7 +19,6 @@ export default function LandingPage() {
 
   if (currentUser != null) {
     router.push("/dashboard");
-    console.log("logged in");
   }
 
   return (

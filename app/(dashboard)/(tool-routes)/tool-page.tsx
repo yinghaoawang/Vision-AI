@@ -15,7 +15,49 @@ import { Message } from "ai";
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
 
-const MessageContent = ({ messages }: { messages?: Message[] }) => {
+const RenderContent = ({
+  type,
+  message,
+}: {
+  message: Message;
+  type: "chat" | "image";
+}) => {
+  if (message.role === "user" || type === "chat") {
+    return (
+      <ReactMarkdown
+        components={{
+          p: ({ node, ...props }) => <p className="my-4" {...props} />,
+          pre: ({ node, ...props }) => (
+            <div className="my-2 w-full overflow-auto rounded-lg bg-black/30 px-4 py-3 leading-6">
+              <pre {...props} />
+            </div>
+          ),
+          code: ({ node, ...props }) => (
+            <code className="rounded-lg bg-black/30 p-2 leading-6" {...props} />
+          ),
+        }}
+      >
+        {message.content}
+      </ReactMarkdown>
+    );
+  } else if (type === "image") {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        alt={message.id}
+        src={`data:image/png;base64,${message.content}`}
+      />
+    );
+  }
+};
+
+const MessageContent = ({
+  messages,
+  type,
+}: {
+  messages?: Message[];
+  type: "chat" | "image";
+}) => {
   return (
     <div className="mb-2 w-full">
       {messages?.map((message, index) => {
@@ -27,26 +69,7 @@ const MessageContent = ({ messages }: { messages?: Message[] }) => {
           >
             <div className="flex w-full max-w-[800px] justify-center px-7">
               <div className="w-full leading-7">
-                <ReactMarkdown
-                  components={{
-                    p: ({ node, ...props }) => (
-                      <p className="my-4" {...props} />
-                    ),
-                    pre: ({ node, ...props }) => (
-                      <div className="my-2 w-full overflow-auto rounded-lg bg-black/30 px-4 py-3 leading-6">
-                        <pre {...props} />
-                      </div>
-                    ),
-                    code: ({ node, ...props }) => (
-                      <code
-                        className="rounded-lg bg-black/30 p-2 leading-6"
-                        {...props}
-                      />
-                    ),
-                  }}
-                >
-                  {message.content}
-                </ReactMarkdown>
+                <RenderContent type={type} message={message} />
               </div>
             </div>
           </div>
@@ -61,11 +84,13 @@ export default function ToolPage({
   onChange,
   messages,
   onSubmit,
+  type,
 }: {
   messages?: Message[];
   onSubmit: FormEventHandler;
   inputMessage: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  type: "chat" | "image";
 }) {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -87,7 +112,7 @@ export default function ToolPage({
       <div
         className={cn("flex flex-col-reverse overflow-auto", messagesHeight)}
       >
-        <MessageContent messages={messages} />
+        <MessageContent type={type} messages={messages} />
       </div>
       <form
         className="flex h-[var(--message-box-height)] justify-center px-5 py-3"
