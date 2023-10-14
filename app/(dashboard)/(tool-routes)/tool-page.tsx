@@ -12,6 +12,8 @@ import { SendHorizonal } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Message } from "ai";
 
+type ToolType = "chat" | "image" | "video";
+
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
 
@@ -20,7 +22,7 @@ const RenderContent = ({
   message,
 }: {
   message: Message;
-  type: "chat" | "image";
+  type: ToolType;
 }) => {
   if (message.role === "user" || type === "chat") {
     return (
@@ -43,11 +45,16 @@ const RenderContent = ({
   } else if (type === "image") {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img
-        alt={message.id}
-        src={`data:image/png;base64,${message.content}`}
-      />
+      <img alt={message.id} src={`data:image/png;base64,${message.content}`} />
     );
+  } else if (type === "video") {
+    return (
+      <video controls>
+        <source src={message.content} />
+      </video>
+    );
+  } else {
+    throw new Error("Invalid tool type");
   }
 };
 
@@ -56,7 +63,7 @@ const MessageContent = ({
   type,
 }: {
   messages?: Message[];
-  type: "chat" | "image";
+  type: ToolType;
 }) => {
   return (
     <div className="mb-2 w-full">
@@ -90,7 +97,7 @@ export default function ToolPage({
   onSubmit: FormEventHandler;
   inputMessage: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
-  type: "chat" | "image";
+  type: ToolType;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
 
