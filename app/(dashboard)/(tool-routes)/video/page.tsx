@@ -24,13 +24,39 @@ export default function ChatPage() {
     setMessages(newMessages);
     setInput("");
     try {
-      const res = await api.post("/api/video", { messages: newMessages });
-      const resMessage: Message = {
-        id: uid(res.data),
-        role: "assistant",
-        content: res.data,
-      };
-      setMessages([...newMessages, resMessage]);
+      const decoder = new TextDecoder();
+
+      const response = await fetch("/api/video", {
+        method: "POST",
+        body: JSON.stringify({
+          messages: newMessages,
+        }),
+      });
+      if (response?.body == null) throw new Error("res has no body");
+      const reader = response.body.getReader();
+
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (done) break;
+        const data = JSON.parse(decoder.decode(value));
+        const { url, error, status } = data;
+        if (error) throw new Error(error);
+        if (status) console.log(status);
+        if (url) {
+          const resMessage: Message = {
+            id: uid(url),
+            role: "assistant",
+            content: url,
+          };
+          setMessages([...newMessages, resMessage]);
+        }
+        console.log(data);
+      }
+
+      console.log("done");
     } catch (error) {
       console.error(error);
       setMessages(prevMessages);

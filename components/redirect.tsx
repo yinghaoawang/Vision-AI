@@ -6,6 +6,7 @@ const Redirect = ({ to }: { to: string }) => {
 
   useEffect(() => {
     router.push(to);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
