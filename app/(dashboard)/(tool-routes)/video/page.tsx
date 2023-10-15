@@ -7,6 +7,7 @@ import { Message } from "ai";
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const handleInputChange: ChangeEventHandler<HTMLTextAreaElement> = (
     event,
@@ -25,6 +26,7 @@ export default function ChatPage() {
     setInput("");
     try {
       const decoder = new TextDecoder();
+      setIsLoading(true);
 
       const response = await fetch("/api/video", {
         method: "POST",
@@ -58,20 +60,22 @@ export default function ChatPage() {
           console.error(error);
         }
       }
-
-      console.log("done");
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       setMessages(prevMessages);
+      setIsLoading(false);
     }
   };
   return (
     <ToolPage
       type="video"
+      isLoading={isLoading}
       inputMessage={input}
       onChange={handleInputChange}
       messages={messages}
       onSubmit={handleSubmit}
+      placeholder="Enter a prompt for an video to generate!"
     />
   );
 }

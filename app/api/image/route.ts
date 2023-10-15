@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function POST(request: NextRequest) {
-  console.log("hey");
   try {
     const { userId } = getAuth(request);
     if (!userId) {

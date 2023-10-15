@@ -91,13 +91,17 @@ export default function ToolPage({
   onChange,
   messages,
   onSubmit,
+  isLoading,
   type,
+  placeholder,
 }: {
   messages?: Message[];
   onSubmit: FormEventHandler;
   inputMessage: string;
+  isLoading: boolean;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
   type: ToolType;
+  placeholder?: string;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -128,13 +132,15 @@ export default function ToolPage({
       >
         <div className="relative w-full max-w-[800px]">
           <Textarea
+            disabled={isLoading}
             value={inputMessage}
             className="bg-slate-800 pr-[50px] text-gray-200 outline-none"
-            placeholder="Ask me anything"
+            placeholder={placeholder}
             onChange={onChange}
             onKeyDown={textAreaKeyPressHandler}
           />
           <Button
+            disabled={isLoading}
             className={cn(
               "absolute bottom-4 right-4 h-[40px] w-[40px] bg-transparent p-0 transition-colors duration-500 hover:bg-inherit",
               inputMessage.length > 0 && "bg-green-600 hover:bg-green-700",
