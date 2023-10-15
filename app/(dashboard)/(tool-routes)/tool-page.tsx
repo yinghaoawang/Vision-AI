@@ -12,7 +12,7 @@ import { SendHorizonal } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Message } from "ai";
 
-type ToolType = "chat" | "image" | "video";
+type ToolType = "chat" | "image" | "video" | "music";
 
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
@@ -52,6 +52,12 @@ const RenderContent = ({
       <video controls>
         <source src={message.content} />
       </video>
+    );
+  } else if (type === "music") {
+    return (
+      <audio controls>
+        <source src={message.content} />
+      </audio>
     );
   } else {
     throw new Error("Invalid tool type");
