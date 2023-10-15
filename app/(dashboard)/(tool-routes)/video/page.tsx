@@ -38,22 +38,25 @@ export default function ChatPage() {
       let done = false;
 
       while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        if (done) break;
-        const data = JSON.parse(decoder.decode(value));
-        const { url, error, status } = data;
-        if (error) throw new Error(error);
-        if (status) console.log(status);
-        if (url) {
-          const resMessage: Message = {
-            id: uid(url),
-            role: "assistant",
-            content: url,
-          };
-          setMessages([...newMessages, resMessage]);
+        try {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (done) break;
+          const data = JSON.parse(decoder.decode(value));
+          const { url, error, status } = data;
+          if (error) throw new Error(error);
+          if (status) console.log(status);
+          if (url) {
+            const resMessage: Message = {
+              id: uid(url),
+              role: "assistant",
+              content: url,
+            };
+            setMessages([...newMessages, resMessage]);
+          }
+        } catch (error) {
+          console.error(error);
         }
-        console.log(data);
       }
 
       console.log("done");
