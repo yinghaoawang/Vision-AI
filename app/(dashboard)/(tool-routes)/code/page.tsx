@@ -2,7 +2,7 @@
 import ToolPage from "../tool-page";
 import { useChat } from "ai/react";
 
-export default function ChatPage() {
+export default function CodePage() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/code",

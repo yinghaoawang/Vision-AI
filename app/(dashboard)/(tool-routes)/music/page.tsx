@@ -4,7 +4,7 @@ import ToolPage from "../tool-page";
 import { uid } from "react-uid";
 import { Message } from "ai";
 
-export default function VideoPage() {
+export default function MusicPage() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -27,7 +27,7 @@ export default function VideoPage() {
       const decoder = new TextDecoder();
       setIsLoading(true);
 
-      const response = await fetch("/api/video", {
+      const response = await fetch("/api/music", {
         method: "POST",
         body: JSON.stringify({
           messages: newMessages,
@@ -68,13 +68,13 @@ export default function VideoPage() {
   };
   return (
     <ToolPage
-      type="video"
+      type="music"
       isLoading={isLoading}
       inputMessage={input}
       onChange={handleInputChange}
       messages={messages}
       onSubmit={handleSubmit}
-      placeholder="Enter a prompt for a video to generate!"
+      placeholder="Enter a prompt for music to generate!"
     />
   );
 }

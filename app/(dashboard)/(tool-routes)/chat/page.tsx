@@ -15,7 +15,7 @@ export default function ChatPage() {
       messages={messages}
       onSubmit={handleSubmit}
       isLoading={isLoading}
-      placeholder="Ask me anything!"
+      placeholder="Talk to me or ask me about anything!"
     />
   );
 }
