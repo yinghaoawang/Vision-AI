@@ -1,12 +1,14 @@
-import { Menu } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import Sidebar from './sidebar';
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import Sidebar from "./sidebar";
+import TokensDisplay from "../navbar/tokens-display";
 
 const SidebarTopbar = () => {
   return (
-    <div className='flex md:hidden bg-inherit text-white'>
-      <div className='flex w-full mx-5 h-[var(--navbar-height)] items-center px-4 text-center justify-between'>
+    <div className="flex bg-inherit text-white md:hidden">
+      <div className="mx-5 flex h-[var(--navbar-height)] w-full items-center justify-between px-4 text-center">
         <Menu />
+        <TokensDisplay />
       </div>
     </div>
   );
@@ -18,8 +20,8 @@ const MobileSidebar = () => {
       <SheetTrigger>
         <SidebarTopbar />
       </SheetTrigger>
-      <SheetContent side='left' className='p-0 w-[300px]'>
-        <Sidebar className='pt-10 h-screen' />
+      <SheetContent side="left" className="w-[300px] p-0">
+        <Sidebar className="h-screen pt-10" />
       </SheetContent>
     </Sheet>
   );
