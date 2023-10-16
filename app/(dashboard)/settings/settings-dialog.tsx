@@ -42,12 +42,12 @@ export default function SettingsDialog({
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>
-            <div className="mt-1 flex flex-col gap-4">
-              <div>
+            <span className="mt-1 flex flex-col gap-4">
+              <span>
                 You are currently have <span className="text-yellow-500">100 tokens</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <div className="flex flex-col justify-evenly gap-2 sm:flex-row">
+              </span>
+              <span className="flex flex-col gap-1">
+                <span className="flex flex-col justify-evenly gap-2 sm:flex-row">
                   {tokenOptions.map((option) => (
                     <Button
                       key={option.tokens}
@@ -59,7 +59,7 @@ export default function SettingsDialog({
                       </span>
                     </Button>
                   ))}
-                </div>
+                </span>
                 <Button
                   variant="ghost"
                   className="nowrap mt-2 w-full font-bold"
@@ -75,8 +75,8 @@ export default function SettingsDialog({
                     Sign Out
                   </Button>
                 </SignOutButton>
-              </div>
-            </div>
+              </span>
+            </span>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
