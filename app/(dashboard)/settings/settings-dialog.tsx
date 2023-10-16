@@ -26,9 +26,14 @@ export default function SettingsDialog({
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>
-            <div className="flex flex-col my-2 gap-4">
+            <div className="mt-1 flex flex-col gap-3">
               <div>You are currently have 69 tokens.</div>
-              <Button className="nowrap w-48" size="lg">Buy more tokens!</Button>
+              <Button className="nowrap w-48" size="lg">
+                Buy more tokens!
+              </Button>
+              <Button variant='success' className="nowrap w-48" size="lg">
+                Purchase History
+              </Button>
             </div>
           </DialogDescription>
         </DialogHeader>
