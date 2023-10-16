@@ -81,6 +81,7 @@ export default function Sidebar({ className }: { className?: string }) {
         if (isSettings)
           return (
             <SettingsDialog
+              key={route.label}
               className={cn(
                 "flex min-h-[55px] items-center px-3 pl-6 text-sm text-white hover:bg-white/10",
                 linkFont,
