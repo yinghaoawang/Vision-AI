@@ -1,4 +1,4 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { clerkClient, getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import stripe from "@/lib/stripe";
 
@@ -27,6 +27,8 @@ export async function POST(request: NextRequest) {
   if (!userId) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
+  const user = await clerkClient.users.getUser(userId);
+  const userEmail = user.emailAddresses?.[0].emailAddress;
 
   const body = await request.json();
   const { product } = body;
@@ -34,7 +36,6 @@ export async function POST(request: NextRequest) {
   if (!matchingOption)
     return NextResponse.json({ message: "Invalid Product" }, { status: 500 });
 
-  console.log(`${process.env.DOMAIN_URL}/dashboard`);
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -49,8 +50,15 @@ export async function POST(request: NextRequest) {
       },
     ],
     mode: "payment",
-    success_url: `${process.env.DOMAIN_URL}/success`,
-    cancel_url: `${process.env.DOMAIN_URL}/cancel`,
+    success_url: `${process.env.DOMAIN_URL}/payment/success`,
+    cancel_url: `${process.env.DOMAIN_URL}/payment/cancel`,
+    customer_email: userEmail,
+    payment_intent_data: {
+      metadata: {
+        userId,
+        ...matchingOption,
+      },
+    },
   });
 
   return NextResponse.json(session);
