@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
       },
     ],
     mode: "payment",
-    success_url: `${process.env.DOMAIN_URL}/dashboard`,
-    cancel_url: `${process.env.DOMAIN_URL}/dashboard`,
+    success_url: `${process.env.DOMAIN_URL}/success`,
+    cancel_url: `${process.env.DOMAIN_URL}/cancel`,
   });
 
   return NextResponse.json(session);
