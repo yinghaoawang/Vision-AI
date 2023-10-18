@@ -2,8 +2,10 @@ import openAI from "@/lib/openai";
 import { getAuth } from "@clerk/nextjs/server";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prismadb";
 
 export const runtime = "edge";
+const tokenCost = 10;
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,6 +14,23 @@ export async function POST(request: NextRequest) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const userData = await prisma.userData.findFirst({
+      where: {
+        userId,
+      },
+    });
+
+    if (userData == null)
+      throw new Error("User data does not exist for " + userId);
+
+    if (userData.tokens < tokenCost)
+      return NextResponse.json(
+        {
+          message: "Not enough tokens",
+        },
+        { status: 400, statusText: "TOKENS_EXHAUSTED" },
+      );
+
     const body = await request.json();
     const { messages } = body;
 
@@ -19,9 +38,19 @@ export async function POST(request: NextRequest) {
       model: "gpt-3.5-turbo",
       stream: true,
       messages,
-      user: userId
+      user: userId,
     });
     const stream = OpenAIStream(aiMessage);
+
+    await prisma.userData.update({
+      where: {
+        userId,
+      },
+      data: {
+        tokens: userData.tokens - tokenCost,
+      },
+    });
+
     return new StreamingTextResponse(stream);
   } catch (error) {
     console.error(error);

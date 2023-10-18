@@ -35,7 +35,7 @@ const RenderContent = ({
             </div>
           ),
           code: ({ node, ...props }) => (
-            <code className="rounded-lg bg-black/30 p-2 leading-6" {...props} />
+            <code className="rounded-lg bg-black/30 p-1 leading-6" {...props} />
           ),
         }}
       >
@@ -158,7 +158,7 @@ export default function ToolPage({
     <div className="h-inherit flex w-full flex-col text-gray-200">
       <div
         className={cn(
-          "flex flex-col-reverse justify-end overflow-auto",
+          "flex flex-col-reverse overflow-auto",
           messagesHeight,
         )}
       >

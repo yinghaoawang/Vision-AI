@@ -59,9 +59,6 @@ export default function SettingsDialog({
               <span className="text-xs">
                 Tokens are used to talk and make requests to Vision.
               </span>
-              <span className="text-xs">
-                Currently talking and making requests to Vision are free, but in the future it will cost tokens.
-              </span>
               <span className="mt-3 flex flex-col gap-1">
                 <span className="flex flex-col justify-evenly gap-2 sm:flex-row">
                   {tokenOptions.map((option) => (
