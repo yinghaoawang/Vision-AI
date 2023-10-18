@@ -9,7 +9,7 @@ export default function CodePage() {
     });
   return (
     <ToolPage
-      type="chat"
+      type="code"
       inputMessage={input}
       onChange={handleInputChange}
       messages={messages}

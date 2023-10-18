@@ -49,14 +49,20 @@ export default function SettingsDialog({
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>
-            <span className="mt-1 flex flex-col gap-4">
+            <span className="mt-1 flex flex-col gap-1">
               <span>
-                You are currently have{" "}
+                You are currently have&nbsp;
                 <span className="text-yellow-500">
                   {authUserData?.tokens} tokens
                 </span>
               </span>
-              <span className="flex flex-col gap-1">
+              <span className="text-xs">
+                Tokens are used to talk and make requests to Vision.
+              </span>
+              <span className="text-xs">
+                Currently talking and making requests to Vision are free, but in the future it will cost tokens.
+              </span>
+              <span className="mt-3 flex flex-col gap-1">
                 <span className="flex flex-col justify-evenly gap-2 sm:flex-row">
                   {tokenOptions.map((option) => (
                     <Button

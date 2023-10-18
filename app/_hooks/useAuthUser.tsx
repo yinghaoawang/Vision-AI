@@ -35,8 +35,6 @@ export default function useAuthUser() {
 
         if (data == null) return;
 
-        console.log("user data gotten", data);
-
         cachedUser = data.user;
         cachedUserData = data.userData;
 

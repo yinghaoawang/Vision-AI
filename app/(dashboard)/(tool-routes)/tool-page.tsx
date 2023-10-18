@@ -12,7 +12,7 @@ import { SendHorizonal } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Message } from "ai";
 
-type ToolType = "chat" | "image" | "video" | "music";
+type ToolType = "chat" | "image" | "video" | "music" | "code";
 
 const messagesHeight =
   "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
@@ -24,7 +24,7 @@ const RenderContent = ({
   message: Message;
   type: ToolType;
 }) => {
-  if (message.role === "user" || type === "chat") {
+  if (message.role === "user" || type === "chat" || type === "code") {
     return (
       <ReactMarkdown
         components={{
@@ -71,8 +71,38 @@ const MessageContent = ({
   messages?: Message[];
   type: ToolType;
 }) => {
+  const getInitMessage = (type: ToolType) => {
+    switch (type) {
+      case "chat":
+        return "Chatting with me costs 10 tokens per request, let's talk!";
+      case "image":
+        return "Image requests are 50 tokens per request, give me a prompt!";
+      case "video":
+        return "Video requests are 300 tokens per request, give me a prompt!";
+      case "music":
+        return "Music requests are 200 tokens per request, give me a prompt!";
+      case "code":
+        return "Code requests are 10 tokens per requestg, give me a prompt!";
+
+      default:
+        throw new Error("Unrecognized tool type: " + type);
+    }
+  };
+  const initialMessage: Message = {
+    id: "initMessage",
+    role: "assistant",
+    content: getInitMessage(type),
+  };
   return (
     <div className="mb-2 w-full">
+      <div className="flex w-full justify-center space-y-4 bg-slate-900 py-2">
+        <div className="flex w-full max-w-[800px] justify-center px-7">
+          <div className="w-full leading-7">
+            <RenderContent type="chat" message={initialMessage} />
+          </div>
+        </div>
+      </div>
+
       {messages?.map((message, index) => {
         const bgColor = message.role === "user" ? "bg-slate-800" : "bg-inherit";
         return (
@@ -127,7 +157,10 @@ export default function ToolPage({
   return (
     <div className="h-inherit flex w-full flex-col text-gray-200">
       <div
-        className={cn("flex flex-col-reverse overflow-auto", messagesHeight)}
+        className={cn(
+          "flex flex-col-reverse justify-end overflow-auto",
+          messagesHeight,
+        )}
       >
         <MessageContent type={type} messages={messages} />
       </div>
