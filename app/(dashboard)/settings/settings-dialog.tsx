@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
-import useAuthUser from "@/app/_hooks/useAuthUser";
+import { useAuthUser } from "@/app/_contexts/AuthUserContext";
 import SignOutButton from "@/components/navbar/sign-out-button";
 
 const tokenOptions = [

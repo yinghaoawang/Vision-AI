@@ -1,4 +1,4 @@
-import useAuthUser from "@/app/_hooks/useAuthUser";
+import { useAuthUser } from "@/app/_contexts/AuthUserContext";
 import Image from "next/image";
 import Link from "next/link";
 

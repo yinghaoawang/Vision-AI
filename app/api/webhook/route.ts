@@ -50,9 +50,6 @@ export async function POST(request: NextRequest) {
           tokens: newTokensAmt,
         },
       });
-
-      console.log('new tokens', newTokensAmt);
-
       break;
 
     default:

@@ -3,14 +3,11 @@ import UserMenu from "./user-menu";
 import MobileSidebar from "../sidebar/mobile-sidebar";
 import { NavbarLogo } from "./navbar-logo";
 import Link from "next/link";
-import useAuthUser from "@/app/_hooks/useAuthUser";
+import { useAuthUser } from "@/app/_contexts/AuthUserContext";
 import { useEffect } from "react";
 
 const NavbarContent = () => {
-  const { authUser, isLoading } = useAuthUser();
-  useEffect(() => {
-    console.log(authUser, isLoading);
-  }, [isLoading, authUser]);
+  const { authUser } = useAuthUser();
   return (
     <>
       <div className="flex gap-10">

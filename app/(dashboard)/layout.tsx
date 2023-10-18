@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import Sidebar from "@/components/sidebar/sidebar";
 import Navbar from "@/components/navbar/navbar";
 import { LoadingPage } from "@/components/loading";
-import useAuthUser from "@/app/_hooks/useAuthUser";
+import { useAuthUser } from "../_contexts/AuthUserContext";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { isLoading } = useAuthUser();

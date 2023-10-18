@@ -1,7 +1,8 @@
 "use client";
 import SettingsDialog from "@/app/(dashboard)/settings/settings-dialog";
 import TokensDisplay from "./tokens-display";
-import useAuthUser from "@/app/_hooks/useAuthUser";
+import { useAuthUser } from "@/app/_contexts/AuthUserContext";
+import { useEffect } from "react";
 
 const UserMenu = () => {
   const { authUser } = useAuthUser();

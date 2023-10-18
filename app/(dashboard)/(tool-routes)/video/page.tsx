@@ -3,8 +3,10 @@ import { ChangeEventHandler, useState } from "react";
 import ToolPage from "../tool-page";
 import { uid } from "react-uid";
 import { Message } from "ai";
+import { useAuthUser } from "@/app/_contexts/AuthUserContext";
 
 export default function VideoPage() {
+  const { reloadAuthUser } = useAuthUser();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -34,6 +36,7 @@ export default function VideoPage() {
         }),
       });
       if (response?.body == null) throw new Error("res has no body");
+      reloadAuthUser();
       const reader = response.body.getReader();
 
       let done = false;

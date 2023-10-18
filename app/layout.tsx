@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { AuthUserProvider } from "./_contexts/AuthUserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`flex min-h-screen flex-col ${inter.className}`}>
         <ClerkProvider>
-          {children}
-          <Toaster />
+          <AuthUserProvider>
+            {children}
+            <Toaster />
+          </AuthUserProvider>
         </ClerkProvider>
       </body>
     </html>

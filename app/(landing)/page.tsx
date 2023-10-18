@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
 import Redirect from "@/components/redirect";
-import useAuthUser from "../_hooks/useAuthUser";
+import { useAuthUser } from "@/app/_contexts/AuthUserContext";
+
 
 export default function LandingPage() {
   const { authUser } = useAuthUser();

@@ -38,7 +38,6 @@ const createStreamForPrompt = ({ prompt }: { prompt: string }) => {
           )
           .then((response) => {
             status.done = true;
-            console.log(response);
             controller.enqueue(
               encoder.encode(stringifyForSSE({ url: response })),
             );
