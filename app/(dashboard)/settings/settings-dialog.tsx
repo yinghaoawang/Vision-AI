@@ -8,12 +8,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { ReactNode, useEffect, useState } from "react";
-import { SignOutButton } from "@clerk/nextjs";
+import { ReactNode } from "react";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
 import useAuthUser from "@/app/_hooks/useAuthUser";
+import SignOutButton from "@/components/navbar/sign-out-button";
 
 const tokenOptions = [
   {
@@ -114,14 +114,7 @@ export default function SettingsDialog({
                     Purchase History
                   </Button>
                 </Link>
-                <SignOutButton>
-                  <Button
-                    variant="ghost"
-                    className="font-bold text-red-500/80 hover:text-red-500"
-                  >
-                    Sign Out
-                  </Button>
-                </SignOutButton>
+                <SignOutButton>Sign Out</SignOutButton>
               </span>
             </span>
           </DialogDescription>

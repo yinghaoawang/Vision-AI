@@ -1,11 +1,14 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 import prisma from "@/lib/prismadb";
 
 export default authMiddleware({
   publicRoutes: ["/", "/login", "/register", "/api/webhook"],
-  async afterAuth(auth) {
-    const { userId } = auth;
-    if (userId == null) return;
+  async afterAuth(auth, req) {
+    const { userId, isPublicRoute } = auth;
+
+    if (!userId && !isPublicRoute)
+      return redirectToSignIn({ returnBackUrl: req.url });
+    if (!userId) return;
 
     const userData = await prisma.userData.findFirst({
       where: {
