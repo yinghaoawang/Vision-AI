@@ -36,6 +36,11 @@ export async function POST(request: NextRequest) {
   if (!matchingOption)
     return NextResponse.json({ message: "Invalid Product" }, { status: 500 });
 
+  const customer = await stripe.customers.search({
+    query: `email:${userEmail}`,
+  });
+  console.log(customer);
+
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {

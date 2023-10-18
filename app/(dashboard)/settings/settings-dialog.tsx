@@ -13,7 +13,7 @@ import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
-import { UserData } from "@/components/navbar/tokens-display";
+import useAuthUser from "@/app/_hooks/useAuthUser";
 
 const tokenOptions = [
   {
@@ -38,14 +38,7 @@ export default function SettingsDialog({
   className?: string;
 }) {
   const { toast } = useToast();
-  const [userData, setUserData] = useState<UserData>();
-  useEffect(() => {
-    (async () => {
-      const data = await fetch("/api/user-data").then((res) => res.json());
-      setUserData(data as UserData);
-    })();
-  }, []);
-  if (userData == null) return <></>;
+  const { authUserData } = useAuthUser();
 
   return (
     <Dialog>
@@ -60,7 +53,7 @@ export default function SettingsDialog({
               <span>
                 You are currently have{" "}
                 <span className="text-yellow-500">
-                  {userData.tokens} tokens
+                  {authUserData?.tokens} tokens
                 </span>
               </span>
               <span className="flex flex-col gap-1">

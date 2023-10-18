@@ -2,20 +2,24 @@
 import UserMenu from "./user-menu";
 import MobileSidebar from "../sidebar/mobile-sidebar";
 import { NavbarLogo } from "./navbar-logo";
-import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import useAuthUser from "@/app/_hooks/useAuthUser";
+import { useEffect } from "react";
 
 const NavbarContent = () => {
-  const { user: currentUser } = useUser();
+  const { authUser, isLoading } = useAuthUser();
+  useEffect(() => {
+    console.log(authUser, isLoading);
+  }, [isLoading, authUser]);
   return (
     <>
       <div className="flex gap-10">
         <NavbarLogo />
       </div>
       <div className="flex items-center gap-10">
-        {currentUser != null && <UserMenu currentUser={currentUser} />}
-        {currentUser == null && (
-          <Link href={currentUser ? "/dashboard" : "/login"}>Log in</Link>
+        {authUser != null && <UserMenu />}
+        {authUser == null && (
+          <Link href={authUser ? "/dashboard" : "/login"}>Log in</Link>
         )}
       </div>
     </>
