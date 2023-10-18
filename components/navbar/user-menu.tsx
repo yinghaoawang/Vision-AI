@@ -1,11 +1,9 @@
 "use client";
-import { useUser } from "@clerk/nextjs";
 import SettingsDialog from "@/app/(dashboard)/settings/settings-dialog";
 import TokensDisplay from "./tokens-display";
+import { UserResource } from "@clerk/types";
 
-const UserMenu = () => {
-  const { user: currentUser } = useUser();
-
+const UserMenu = ({ currentUser }: { currentUser: UserResource }) => {
   return (
     <>
       <SettingsDialog className="whitespace-nowrap">

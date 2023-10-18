@@ -2,6 +2,7 @@ import stripe from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
+import prisma from "@/lib/prismadb";
 
 export async function POST(request: NextRequest) {
   let event: Stripe.Event | undefined;
@@ -22,9 +23,38 @@ export async function POST(request: NextRequest) {
   // Handle the event
   switch (event?.type) {
     case "payment_intent.succeeded":
-      console.log(session);
-      console.log(session?.metadata);
+      const metadata = session?.metadata;
+      const clerkTokens = metadata?.tokens as string | null;
+      const clerkUserId = metadata?.userId as string | null;
+
+      if (clerkTokens == null || clerkUserId == null) {
+        throw new Error("Tokens or userId is messing from the metadata.");
+      }
+
+      const userData = await prisma.userData.findFirst({
+        where: {
+          userId: clerkUserId,
+        },
+      });
+
+      if (userData == null)
+        throw new Error("UserData for user could not be found");
+
+      const newTokensAmt = parseInt(clerkTokens) + userData.tokens;
+
+      await prisma.userData.update({
+        where: {
+          id: userData.id,
+        },
+        data: {
+          tokens: newTokensAmt,
+        },
+      });
+
+      console.log('new tokens', newTokensAmt);
+
       break;
+
     default:
       console.error(`Unhandled event type: ${event?.type || "null"}.`);
       return Response.json(

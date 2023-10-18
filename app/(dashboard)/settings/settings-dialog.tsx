@@ -8,11 +8,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
+import { UserData } from "@/components/navbar/tokens-display";
 
 const tokenOptions = [
   {
@@ -37,6 +38,15 @@ export default function SettingsDialog({
   className?: string;
 }) {
   const { toast } = useToast();
+  const [userData, setUserData] = useState<UserData>();
+  useEffect(() => {
+    (async () => {
+      const data = await fetch("/api/user-data").then((res) => res.json());
+      setUserData(data as UserData);
+    })();
+  }, []);
+  if (userData == null) return <></>;
+
   return (
     <Dialog>
       <DialogTrigger className={cn("flex w-full", className)}>
@@ -49,7 +59,9 @@ export default function SettingsDialog({
             <span className="mt-1 flex flex-col gap-4">
               <span>
                 You are currently have{" "}
-                <span className="text-yellow-500">100 tokens</span>
+                <span className="text-yellow-500">
+                  {userData.tokens} tokens
+                </span>
               </span>
               <span className="flex flex-col gap-1">
                 <span className="flex flex-col justify-evenly gap-2 sm:flex-row">
@@ -57,7 +69,7 @@ export default function SettingsDialog({
                     <Button
                       onClick={async () => {
                         try {
-                          const response = await fetch("/api/payment", {
+                          fetch("/api/payment", {
                             method: "POST",
                             body: JSON.stringify({
                               product: option,
@@ -70,7 +82,6 @@ export default function SettingsDialog({
                               return response.json();
                             })
                             .then(function (session) {
-                              console.log(session);
                               const stripePromise = loadStripe(
                                 process.env
                                   .NEXT_PUBLIC_STRIPE_API_PUBLISHABLE_KEY as string,
