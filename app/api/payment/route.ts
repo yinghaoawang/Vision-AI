@@ -36,10 +36,14 @@ export async function POST(request: NextRequest) {
   if (!matchingOption)
     return NextResponse.json({ message: "Invalid Product" }, { status: 500 });
 
-  const customer = await stripe.customers.search({
-    query: `email:${userEmail}`,
-  });
-  console.log(customer);
+  const matchingCustomers = await stripe.customers.list({ email: userEmail });
+  const matchingCustomer = matchingCustomers?.data?.[0];
+
+  const customer =
+    matchingCustomer ||
+    (await stripe.customers.create({
+      email: userEmail,
+    }));
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -57,7 +61,7 @@ export async function POST(request: NextRequest) {
     mode: "payment",
     success_url: `${process.env.DOMAIN_URL}/payment/success`,
     cancel_url: `${process.env.DOMAIN_URL}/payment/cancel`,
-    customer_email: userEmail,
+    customer: customer.id,
     payment_intent_data: {
       metadata: {
         userId,

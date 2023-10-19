@@ -9,13 +9,17 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
-import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuthUser } from "@/app/_contexts/AuthUserContext";
 import SignOutButton from "@/components/navbar/sign-out-button";
 
-const tokenOptions = [
+type TokenOption = {
+  price: number;
+  tokens: number;
+};
+
+const tokenOptions: TokenOption[] = [
   {
     price: 5,
     tokens: 4000,
@@ -40,6 +44,57 @@ export default function SettingsDialog({
   const { toast } = useToast();
   const { authUserData } = useAuthUser();
 
+  const handlePaymentHistory = async () => {
+    try {
+      const response = await fetch("/api/payment/history");
+      if (!response.ok) {
+        throw new Error("Bad response from server");
+      }
+      const session = await response.json();
+      console.log(session.url, session);
+      // open in a new window
+      window.open(session?.url, "_blank");
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Payment",
+        description: "Something went wrong, try again later.",
+      });
+    }
+  };
+
+  const handlePurchaseToken = async (option: TokenOption) => {
+    try {
+      const response = await fetch("/api/payment", {
+        method: "POST",
+        body: JSON.stringify({
+          product: option,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Bad response from server");
+      }
+      const session = await response.json();
+      const stripePromise = loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_API_PUBLISHABLE_KEY as string,
+      );
+
+      void stripePromise.then((Stripe) => {
+        Stripe?.redirectToCheckout({
+          sessionId: session.id,
+        });
+      });
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Payment",
+        description: "Something went wrong, try again later.",
+      });
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger className={cn("flex w-full", className)}>
@@ -63,41 +118,7 @@ export default function SettingsDialog({
                 <span className="flex flex-col justify-evenly gap-2 sm:flex-row">
                   {tokenOptions.map((option) => (
                     <Button
-                      onClick={async () => {
-                        try {
-                          fetch("/api/payment", {
-                            method: "POST",
-                            body: JSON.stringify({
-                              product: option,
-                            }),
-                          })
-                            .then(function (response) {
-                              if (!response.ok) {
-                                throw new Error("Bad response from server");
-                              }
-                              return response.json();
-                            })
-                            .then(function (session) {
-                              const stripePromise = loadStripe(
-                                process.env
-                                  .NEXT_PUBLIC_STRIPE_API_PUBLISHABLE_KEY as string,
-                              );
-                              stripePromise.then((Stripe) => {
-                                Stripe?.redirectToCheckout({
-                                  sessionId: session.id,
-                                });
-                              });
-                            });
-                        } catch (error) {
-                          console.error(error);
-                          toast({
-                            variant: "destructive",
-                            title: "Payment",
-                            description:
-                              "Something went wrong, try again later.",
-                          });
-                        }
-                      }}
+                      onClick={() => handlePurchaseToken(option)}
                       key={option.tokens}
                       className="flex h-20 w-full flex-col gap-1 bg-yellow-500 hover:bg-yellow-500/90"
                     >
@@ -108,15 +129,14 @@ export default function SettingsDialog({
                     </Button>
                   ))}
                 </span>
-                <Link href="https://billing.stripe.com/p/login/5kA8xo74zg9ofdK144">
-                  <Button
-                    variant="ghost"
-                    className="nowrap mt-2 w-full font-bold"
-                    size="lg"
-                  >
-                    Purchase History
-                  </Button>
-                </Link>
+                <Button
+                  variant="ghost"
+                  className="nowrap mt-2 w-full font-bold"
+                  size="lg"
+                  onClick={handlePaymentHistory}
+                >
+                  Payment History
+                </Button>
                 <SignOutButton>Sign Out</SignOutButton>
               </span>
             </span>
