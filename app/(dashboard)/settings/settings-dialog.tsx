@@ -51,7 +51,6 @@ export default function SettingsDialog({
         throw new Error("Bad response from server");
       }
       const session = await response.json();
-      console.log(session.url, session);
       // open in a new window
       window.open(session?.url, "_blank");
     } catch (error) {

@@ -58,6 +58,9 @@ export async function POST(request: NextRequest) {
         quantity: 1,
       },
     ],
+    invoice_creation: {
+      enabled: true,
+    },
     mode: "payment",
     success_url: `${process.env.DOMAIN_URL}/payment/success`,
     cancel_url: `${process.env.DOMAIN_URL}/payment/cancel`,
