@@ -13,7 +13,7 @@ export const LoadingPage = ({
 }) => (
   <div
     className={cn(
-      "flex h-10 min-h-screen w-full items-center justify-center",
+      "flex h-10 min-h-[100svh] w-full items-center justify-center",
       bg || "bg-slate-900",
     )}
   >

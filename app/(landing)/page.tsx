@@ -12,10 +12,10 @@ export default function LandingPage() {
 
   return (
     <>
-      <div className="flex min-h-screen justify-center bg-slate-900 ">
+      <div className="flex min-h-[100svh] justify-center bg-slate-900 ">
         <div className="flex w-full max-w-[1200px] grow flex-col text-white">
-          {authUser == null && <Redirect to="/dashboard" />}
-          {authUser != null && (
+          {authUser != null && <Redirect to="/dashboard" />}
+          {authUser == null && (
             <>
               <div className="flex items-center justify-between px-5">
                 <NavbarLogo />

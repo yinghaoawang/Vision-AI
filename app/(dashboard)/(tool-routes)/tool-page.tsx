@@ -15,7 +15,9 @@ import { Message } from "ai";
 type ToolType = "chat" | "image" | "video" | "music" | "code";
 
 const messagesHeight =
-  "h-[calc(100vh-var(--message-box-height)-var(--navbar-height))]";
+  "h-[calc(100svh-var(--message-box-height)-var(--navbar-height))]";
+
+const textareaHeight = "h-[var(--message-box-height)]";
 
 const RenderContent = ({
   type,
@@ -165,7 +167,10 @@ export default function ToolPage({
         <MessageContent type={type} messages={messages} />
       </div>
       <form
-        className="flex h-[var(--message-box-height)] justify-center px-5 py-3"
+        className={cn(
+          "flex h-[var(--message-box-height)] justify-center px-5 py-3",
+          textareaHeight,
+        )}
         onSubmit={onSubmit}
         ref={formRef}
       >

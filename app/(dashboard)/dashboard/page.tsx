@@ -23,7 +23,7 @@ const descriptions = [
   "Elevate your creativity with AI – effortlessly generate photos, videos, and code with the ultimate toolkit at your disposal.",
 ];
 
-const dashboardHeight = "h-[calc(100vh-var(--navbar-height))]";
+const dashboardHeight = "h-[calc(100svh-var(--navbar-height))]";
 
 export default function DashboardPage() {
   const router = useRouter();

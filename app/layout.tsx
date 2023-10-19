@@ -19,7 +19,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`flex min-h-screen flex-col ${inter.className}`}>
+      <body className={`flex min-h-[100svh] flex-col ${inter.className}`}>
         <ClerkProvider>
           <AuthUserProvider>
             {children}

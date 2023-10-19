@@ -59,7 +59,7 @@ export const tools = [
   },
 ];
 
-const sidebarHeight = "h-[calc(100vh-var(--navbar-height))]";
+const sidebarHeight = "h-[calc(100svh-var(--navbar-height))]";
 
 const linkFont = Rubik({
   subsets: ["latin"],
