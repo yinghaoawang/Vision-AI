@@ -12,6 +12,31 @@ import { SendHorizonal } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Message } from "ai";
 
+const isMobileUser = () => {
+  let hasTouchScreen = false;
+
+  if ("maxTouchPoints" in navigator) {
+    hasTouchScreen = navigator?.maxTouchPoints > 0;
+  } else if ("msMaxTouchPoints" in navigator) {
+    hasTouchScreen = (navigator as any)?.msMaxTouchPoints > 0;
+  } else {
+    var mQ = (window as any)?.matchMedia && matchMedia("(pointer:coarse)");
+    if (mQ && mQ.media === "(pointer:coarse)") {
+      hasTouchScreen = !!mQ.matches;
+    } else if ("orientation" in window) {
+      hasTouchScreen = true; // deprecated, but good fallback
+    } else {
+      // Only as a last resort, fall back to user agent sniffing
+      var UA = (navigator as any)?.userAgent;
+      hasTouchScreen =
+        /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+        /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+    }
+  }
+
+  return hasTouchScreen;
+};
+
 type ToolType = "chat" | "image" | "video" | "music" | "code";
 
 const messagesHeight =
@@ -150,10 +175,8 @@ export default function ToolPage({
   };
 
   const textAreaKeyPressHandler = (event: KeyboardEvent) => {
-    if (
-      event.key === "Enter" &&
-      (event.shiftKey == true || event.ctrlKey == true)
-    ) {
+    if (isMobileUser()) return;
+    if (event.key === "Enter" && !event.shiftKey == true) {
       event.preventDefault();
       requestSubmitForm();
     }
