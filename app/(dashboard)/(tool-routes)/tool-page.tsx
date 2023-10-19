@@ -148,7 +148,10 @@ export default function ToolPage({
   };
 
   const textAreaKeyPressHandler = (event: KeyboardEvent) => {
-    if (event.key === "Enter" && event.shiftKey == false) {
+    if (
+      event.key === "Enter" &&
+      (event.shiftKey == true || event.ctrlKey == true)
+    ) {
       event.preventDefault();
       requestSubmitForm();
     }
@@ -157,10 +160,7 @@ export default function ToolPage({
   return (
     <div className="h-inherit flex w-full flex-col text-gray-200">
       <div
-        className={cn(
-          "flex flex-col-reverse overflow-auto",
-          messagesHeight,
-        )}
+        className={cn("flex flex-col-reverse overflow-auto", messagesHeight)}
       >
         <MessageContent type={type} messages={messages} />
       </div>
