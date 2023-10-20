@@ -36,5 +36,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # Stripe webhook
 
 Run this command for local webhooks `stripe listen --forward-to localhost:3000/api/webhook`
-
-run this command to test `stripe trigger payment_intent.succeeded`

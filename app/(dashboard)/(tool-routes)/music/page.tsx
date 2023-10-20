@@ -4,9 +4,11 @@ import ToolPage from "../tool-page";
 import { uid } from "react-uid";
 import { Message } from "ai";
 import { useAuthUser } from "@/app/_contexts/AuthUserContext";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function MusicPage() {
   const { reloadAuthUser } = useAuthUser();
+  const { toast } = useToast();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -35,6 +37,14 @@ export default function MusicPage() {
           messages: newMessages,
         }),
       });
+      if (!response.ok) {
+        throw new Error(
+          JSON.stringify({
+            status: response.status,
+            statusCode: response.statusText,
+          }),
+        );
+      }
       if (response?.body == null) throw new Error("res has no body");
       reloadAuthUser();
       const reader = response.body.getReader();
@@ -64,7 +74,18 @@ export default function MusicPage() {
       }
       setIsLoading(false);
     } catch (error) {
+      console.log("whatfuh');");
       console.error(error);
+
+      if (error instanceof Error) {
+        const statusCode = JSON.parse(error.message)?.statusCode;
+        if (statusCode === "TOKENS_EXHAUSTED") {
+          toast({
+            variant: "destructive",
+            description: "Not enough tokens to make request.",
+          });
+        }
+      }
       setMessages(prevMessages);
       setIsLoading(false);
     }

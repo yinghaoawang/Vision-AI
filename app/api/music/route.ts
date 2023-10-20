@@ -64,7 +64,7 @@ const createStreamForPrompt = ({ prompt }: { prompt: string }) => {
 
 export async function POST(request: NextRequest) {
   const { userId } = getAuth(request);
-  
+
   if (!userId) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
@@ -82,6 +82,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: "Not enough tokens",
+        statusCode: "TOKENS_EXHAUSTED",
       },
       { status: 400, statusText: "TOKENS_EXHAUSTED" },
     );

@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           message: "Not enough tokens",
+          statusCode: "TOKENS_EXHAUSTED",
         },
         { status: 400, statusText: "TOKENS_EXHAUSTED" },
       );
