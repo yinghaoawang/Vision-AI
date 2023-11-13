@@ -1,38 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vision AI
+### A powerful application that allows users to query an AI across various domains including chat, image, video, music generation, and code generation.
+![App screenshot](https://i.imgur.com/l1kg1ev.png)
+Users authenticate using Clerk.js and can purchase tokens via Stripe to access the AI's functionalities.
 
-## Getting Started
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- **Multi-Domain AI Queries**: Access various AI capabilities such as:
+  - Chatbot
+  - Image Generator
+  - Video Generator
+  - Music Generator
+  - Code Generator
+ 
+![Chatbot](https://i.imgur.com/cAFYfr9.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **User Authentication**: Utilizes Clerk.js for secure user authentication.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Token-Based Access**: Users can buy tokens through Stripe to leverage AI functionalities.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Database Integration**: Prisma and MongoDB utilized for robust database support.
 
-## Learn More
+![Image generation](https://i.imgur.com/S3CBrFy.png)
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yinghaoawang/Vision-AI.git
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. Set up environment variables:
+   - Create a `.env` file and fill in the required environment variables.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Start the application:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-# Stripe webhook
+### Stripe webhook
 
 Run this command for local webhooks `stripe listen --forward-to localhost:3000/api/webhook`
+
+## Usage
+
+### Authentication
+
+To begin using the app, users need to sign up or log in via the provided authentication service powered by Clerk.js.
+
+![Clerk](https://i.imgur.com/zQQEzHm.png)
+
+### Token Purchase
+
+- Users can purchase tokens via the Stripe integration to gain access to the AI services.
+
+![Tokens](https://i.imgur.com/P7aAmYb.png)
+
+### Querying the AI
+
+1. Select the desired AI function from the available options.
+2. Use the tokens to make queries and interact with the AI.
+
+## Tech Stack
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Contributing
+
+We welcome contributions! If you'd like to improve this project, feel free to submit issues or pull requests.
+
+![Video generation](https://i.imgur.com/7cVYrFI.png)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
